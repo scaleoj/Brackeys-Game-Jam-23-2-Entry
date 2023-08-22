@@ -59,16 +59,26 @@ public class PlayerMovement : MonoBehaviour
 
         if(body.velocity.y < 0.1f && jump == true && body.gravityScale > 0)
         {
-            body.gravityScale = 0;
-            body.velocity = zero;
-            jump = false;
+            if(dive != true)
+            {
+                body.gravityScale = 0;
+                body.velocity = zero;
+                jump = false;
+            }
+
+
+            
         }
 
         if (body.velocity.y > 0.1f && dive == true && body.gravityScale < 0)
         {
-            body.gravityScale = 0;
-            body.velocity = zero;
-            dive = false;
+            if(jump!= true)
+            {
+                body.gravityScale = 0;
+                body.velocity = zero;
+                dive = false;
+            }
+
         }
     }
 
