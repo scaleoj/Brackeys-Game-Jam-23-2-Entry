@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-
     public MovementController2D controller;
     public Rigidbody2D body;
+    public Animator animator;
 
     public float runSpeed = 40f;
 
     float horizontalMove = 0f;
     bool jump = false;
     bool dive = false;
+    bool WLocker = false;
+    bool SLocker = false;
 
     private Vector2 zero = new Vector2(0, 0);
 
@@ -27,32 +29,38 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontalMove = Input.GetAxis("Horizontal") * runSpeed;
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
+
+        if (Input.GetKeyDown(KeyCode.W)&& !SLocker)
         {
             dive = false;
             jump = true;
+            WLocker = true;
             body.gravityScale = -0.5f;
         }
 
 
-        if(Input.GetKeyUp(KeyCode.Space))
+        if(Input.GetKeyUp(KeyCode.W))
         {
-            
+   
             body.gravityScale = 0.5f;
+            WLocker = false;
 
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.S) && !WLocker)
         {
             jump = false;
             dive = true;
+            SLocker = true;
             body.gravityScale = 0.5f;
         }
 
-        if (Input.GetKeyUp(KeyCode.LeftShift))
+        if (Input.GetKeyUp(KeyCode.S))
         {
             
             body.gravityScale = -0.5f;
+            SLocker = false;
         }
 
 
@@ -64,6 +72,10 @@ public class PlayerMovement : MonoBehaviour
                 body.gravityScale = 0;
                 body.velocity = zero;
                 jump = false;
+            }
+            else
+            {
+                body.gravityScale = -0.5f;
             }
 
 
@@ -77,6 +89,10 @@ public class PlayerMovement : MonoBehaviour
                 body.gravityScale = 0;
                 body.velocity = zero;
                 dive = false;
+            }
+            else
+            {
+                body.gravityScale = 0.5f;
             }
 
         }
