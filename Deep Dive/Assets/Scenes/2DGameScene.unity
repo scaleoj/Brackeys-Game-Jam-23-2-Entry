@@ -425,6 +425,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textbox: {fileID: 397732775}
+  smallScore: 100
+  largeScore: 500
 --- !u!1001 &314593870
 PrefabInstance:
   m_ObjectHideFlags: 0

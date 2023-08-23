@@ -6,6 +6,9 @@ using TMPro;
 public class ItemCollector : MonoBehaviour
 {
     [SerializeField] private TMP_Text textbox;
+
+    public int smallScore = 100;
+    public int largeScore = 100;
     private int score = 0;
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -14,7 +17,7 @@ public class ItemCollector : MonoBehaviour
         {
             
             Destroy(collision.gameObject);
-            score = score + 100;
+            score = score + smallScore;
             textbox.text = "Score: " + score;
         }
 
@@ -22,7 +25,7 @@ public class ItemCollector : MonoBehaviour
         {
             
             Destroy(collision.gameObject);
-            score = score + 500;
+            score = score + largeScore;
             textbox.text = "Score: " + score;
         }
 
