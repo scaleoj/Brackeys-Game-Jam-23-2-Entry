@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class Stats : MonoBehaviour
@@ -17,22 +18,30 @@ public class Stats : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("hi");
         if (collision.gameObject.CompareTag("Swordfish"))
         {
-            Debug.Log("Swordfish");
+            health -= 20;
+            healthText.text = "Health: " + health;
+
         }
 
         if (collision.gameObject.CompareTag("Seekerfish"))
         {
-
-            Debug.Log("Seekerfish");
+            health -= 40;
+            healthText.text = "Health: " + health;
+            
         }
 
         if (collision.gameObject.CompareTag("Mine"))
         {
+            health -= 100;
+            healthText.text = "Health: " + health;
 
-            Debug.Log("Mine");
+        }
+
+        if (health <= 0)
+        {
+            SceneManager.LoadScene("2DGameScene");
         }
 
     }
