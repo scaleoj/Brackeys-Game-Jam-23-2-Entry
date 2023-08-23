@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Pick-Up small
   - Pick-Up big
+  - Swordfish
+  - Seekerfish
+  - Mine
   layers:
   - Default
   - TransparentFX
