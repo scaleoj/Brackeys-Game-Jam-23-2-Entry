@@ -9,6 +9,7 @@ TagManager:
   - Swordfish
   - Seekerfish
   - Mine
+  - Oxygen
   layers:
   - Default
   - TransparentFX
