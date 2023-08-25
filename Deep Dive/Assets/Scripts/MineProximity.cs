@@ -36,6 +36,10 @@ public class MineProximity : MonoBehaviour
             anim.SetBool("explode", true);
             Destroy(collision.gameObject);
         }
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            anim.SetBool("explode", true);
+        }
     }
 
     void DeleteMe()

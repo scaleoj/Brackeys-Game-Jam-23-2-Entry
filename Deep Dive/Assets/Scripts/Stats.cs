@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using TMPro;
 
 public class Stats : MonoBehaviour
 {
+    [SerializeField] public GameManager gameManager;
+
+
     public Animator anim;
 
     [SerializeField] TMP_Text healthText;
@@ -22,9 +24,13 @@ public class Stats : MonoBehaviour
     private float depth;
     public float modifier = 4f;
 
+    private bool isDead;
+    
+
     void Start()
     {
         depletion = oxygendepletionrate;
+        isDead= false;
     }
 
 
@@ -45,8 +51,9 @@ public class Stats : MonoBehaviour
         }
 
 
-        if (health <= 0)
+        if (health <= 0 && !isDead)
         {
+
             EndScene();
         }
 
@@ -61,10 +68,15 @@ public class Stats : MonoBehaviour
         if (collision.gameObject.CompareTag("Mine"))
         {
 
-            health -= (int)((100f/ 100f)*damagemodifier);
+            health -= (int)((60f/ 100f)*damagemodifier);
             healthText.text = "Health: " + health;
-            EndScene();
 
+        }
+
+        if (health <= 0 && !isDead)
+        {
+
+            EndScene();
         }
     }
 
@@ -101,15 +113,17 @@ public class Stats : MonoBehaviour
         modifyText.text = "Depth: " + (int)(depth) + " (" + (int)damagemodifier + "% Damage)";
         oxygen -= depletion * Time.deltaTime;
         oxygenText.text = "Oxygen: " + (int)oxygen;
-        if(oxygen <= 0)
+        if(oxygen <= 0 && !isDead)
         {
+            isDead= true;
             EndScene();
         }
     }
 
     void EndScene()
     {
-        SceneManager.LoadScene("2DGameScene");
+
+        gameManager.GameOver();
     }
 
 
