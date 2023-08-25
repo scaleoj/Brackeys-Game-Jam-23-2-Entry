@@ -20,6 +20,7 @@ public class Stats : MonoBehaviour
     [SerializeField] TMP_Text modifyText;
     private float damagemodifier = 1f;
     private float depth;
+    public float modifier = 4f;
 
     void Start()
     {
@@ -96,7 +97,7 @@ public class Stats : MonoBehaviour
     void Update()
     {
         depth = Mathf.Round(depthCheck.transform.position.y - transform.position.y);
-        damagemodifier = (depth/10)*2;
+        damagemodifier = (depth/10)*modifier;
         modifyText.text = "Depth: " + (int)(depth) + " (" + (int)damagemodifier + "% Damage)";
         oxygen -= depletion * Time.deltaTime;
         oxygenText.text = "Oxygen: " + (int)oxygen;

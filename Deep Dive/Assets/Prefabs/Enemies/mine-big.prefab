@@ -136,5 +136,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  proximity: 10
+  proximity: 3
   anim: {fileID: 5223720227914409650}
