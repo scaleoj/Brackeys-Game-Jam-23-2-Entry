@@ -6,6 +6,10 @@ using TMPro;
 public class Stats : MonoBehaviour
 {
     [SerializeField] public GameManager gameManager;
+    public AudioSource drowning;
+    public AudioSource breath;
+    private bool drown;
+    private bool bBool;
 
 
     public Animator anim;
@@ -22,6 +26,7 @@ public class Stats : MonoBehaviour
     [SerializeField] TMP_Text modifyText;
     private float damagemodifier = 1f;
     private float depth;
+    private float deepest = 0;
     public float modifier = 4f;
 
     private bool isDead;
@@ -63,7 +68,14 @@ public class Stats : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Oxygen"))
         {
+            
             depletion = 0f;
+            if(!bBool)
+            {
+                bBool= true;
+                breath.Play();
+            }
+            
         }
         if (collision.gameObject.CompareTag("Mine"))
         {
@@ -72,6 +84,7 @@ public class Stats : MonoBehaviour
             healthText.text = "Health: " + health;
 
         }
+       
 
         if (health <= 0 && !isDead)
         {
@@ -85,9 +98,11 @@ public class Stats : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Oxygen"))
         {
-            if(oxygen < 100f)
+            drowning.Stop();
+            if (oxygen < 100f)
             {
-                oxygen += 10f;
+
+                oxygen += 10f*Time.deltaTime;
             }
             else if (oxygen > 100f)
             {
@@ -103,17 +118,46 @@ public class Stats : MonoBehaviour
         if (collision.gameObject.CompareTag("Oxygen"))
         {
             depletion = oxygendepletionrate;
+            bBool= false;
         }
     }
 
     void Update()
     {
         depth = Mathf.Round(depthCheck.transform.position.y - transform.position.y);
+        if(depth > deepest)
+        {
+            deepest = depth;
+            gameManager.SetDepth(depth);
+        }
         damagemodifier = (depth/10)*modifier;
         modifyText.text = "Depth: " + (int)(depth) + " (" + (int)damagemodifier + "% Damage)";
         oxygen -= depletion * Time.deltaTime;
         oxygenText.text = "Oxygen: " + (int)oxygen;
-        if(oxygen <= 0 && !isDead)
+        if(oxygen <=50 && oxygen > 25)
+        {
+            oxygenText.color = new Color32(255, 255, 0, 255);
+        }
+        else if(oxygen<=25)
+        {
+            if(!drown)
+            {
+                drown= true;
+                drowning.Play();
+            }
+            
+            oxygenText.color = new Color32(255, 0, 0, 255);
+            
+        }else
+        {
+            oxygenText.color = new Color32(255, 255, 255, 255);
+        }
+        if (health <= 40)
+        {
+            healthText.color = new Color32(255, 0, 0, 255);
+        }
+
+        if (oxygen <= 0 && !isDead)
         {
             isDead= true;
             EndScene();
@@ -122,7 +166,7 @@ public class Stats : MonoBehaviour
 
     void EndScene()
     {
-
+        drowning.Stop();
         gameManager.GameOver();
     }
 

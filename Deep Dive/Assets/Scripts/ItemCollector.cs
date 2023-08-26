@@ -6,6 +6,10 @@ using TMPro;
 public class ItemCollector : MonoBehaviour
 {
     [SerializeField] private TMP_Text textbox;
+    public AudioSource small;
+    public AudioSource big;
+
+    public GameManager gameManager;
 
     public int smallScore = 100;
     public int largeScore = 100;
@@ -19,6 +23,8 @@ public class ItemCollector : MonoBehaviour
             Destroy(collision.gameObject);
             score = score + smallScore;
             textbox.text = "Score: " + score;
+            gameManager.SetScore(score);
+            small.Play();
         }
 
         if(collision.gameObject.CompareTag("Pick-Up big"))
@@ -27,7 +33,8 @@ public class ItemCollector : MonoBehaviour
             Destroy(collision.gameObject);
             score = score + largeScore;
             textbox.text = "Score: " + score;
+            gameManager.SetScore(score);
+            big.Play();
         }
-
     }
 }

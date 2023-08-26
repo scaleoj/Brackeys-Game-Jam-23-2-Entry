@@ -8,6 +8,7 @@ public class MineProximity : MonoBehaviour
     [SerializeField] public GameObject player;
     public float proximity;
     public Animator anim;
+    public AudioSource audio;
 
     // Start is called before the first frame update
     void Start()
@@ -34,10 +35,12 @@ public class MineProximity : MonoBehaviour
         if (collision.gameObject.CompareTag("Seekerfish"))
         {
             anim.SetBool("explode", true);
+            audio.Play();
             Destroy(collision.gameObject);
         }
         if (collision.gameObject.CompareTag("Player"))
         {
+            audio.Play();
             anim.SetBool("explode", true);
         }
     }
